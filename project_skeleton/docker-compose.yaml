@@ -1,0 +1,31 @@
+version: '3'
+services:
+  db:
+    image: mysql:5.6.51
+    container_name: mysqldb
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: godb
+    networks:
+      - usercurdnetwork
+    volumes:
+      - db_mysql:/var/lib/mysql/data
+
+  web:
+    build: .
+    container_name: usercurdapi
+    ports:
+      - "9090:9090"
+    depends_on:
+      - db
+    networks:
+      - usercurdnetwork
+
+volumes:
+  db_mysql:
+
+networks:
+  usercurdnetwork:
+    driver: bridge
