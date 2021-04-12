@@ -12,6 +12,6 @@ func main() {
 	time.Sleep(15 * time.Second)
 	models.InitialMigration()
 	r := routers.SetupRouter()
-	log.Println("server started on 9091")
-	log.Fatal(http.ListenAndServe(":9091", r))
+	log.Println("server started on 9090")
+	log.Fatal(http.ListenAndServe(":9090", r))
 }

@@ -24,15 +24,18 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 	var userData models.User
 	id, _ := strconv.Atoi(params["id"])
 	json.NewDecoder(r.Body).Decode(&userData)
-	resp := user.UpdateUser(userData, id)
-	apihelpers.Respond(w, map[string]interface{}{"users": resp})
+	resp, _ := user.UpdateUser(userData, id)
+	if resp.ID == 0 {
+		apihelpers.Respond(w, map[string]interface{}{"users": "user not exist"})
+	} else {
+		apihelpers.Respond(w, map[string]interface{}{"users": resp})
+	}
 
 }
+
 func GetUsers(w http.ResponseWriter, r *http.Request) {
 
-	//call service
 	resp := user.GetUsers()
-	//return response using api helper
 	apihelpers.Respond(w, map[string]interface{}{"users": resp})
 
 }
@@ -40,16 +43,17 @@ func GetUsers(w http.ResponseWriter, r *http.Request) {
 func GetUser(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	id, _ := strconv.Atoi(params["id"])
-	//call service
-	resp := user.GetUser(id)
-	//return response using api helper
-	apihelpers.Respond(w, map[string]interface{}{"users": resp})
-
+	resp, _ := user.GetUser(id)
+	if resp.ID == 0 {
+		apihelpers.Respond(w, map[string]interface{}{"users": "user not found"})
+	} else {
+		apihelpers.Respond(w, map[string]interface{}{"users": resp})
+	}
 }
 
 func DeleteUser(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	id, _ := strconv.Atoi(params["id"])
-	resp := user.DeleteUser(id)
+	resp, _ := user.DeleteUser(id)
 	apihelpers.Respond(w, map[string]interface{}{"users": resp})
 }

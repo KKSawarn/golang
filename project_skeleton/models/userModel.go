@@ -10,7 +10,10 @@ import (
 var DB *gorm.DB
 var err error
 
+// Local server DNS
 // const DNS = "root:password@tcp(127.0.0.1:3306)/godb?charset=utf8mb4&parseTime=True&loc=Local"
+
+// DOCKER IMAGE DNS
 const DNS = "root:password@tcp(mysqldb:3306)/godb?charset=utf8mb4&parseTime=True&loc=Local"
 
 type User struct {
